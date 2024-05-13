@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>htnml Events </title>
+    </head>
+    <body style="background-color: #414141; color: aliceblue;">
+        <h2>Amazing image</h2>
+        <div >
+            <ul id="images">
+                <li><img width="200px" id="photoshop" src="https://images.pexels.com/photos/3561339/pexels-photo-3561339.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt="photoshop"></li>
+                <li><img width="200px" id="japan" src="https://images.pexels.com/photos/3532553/pexels-photo-3532553.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+                <li><img width="200px" id="river" src="https://images.pexels.com/photos/3532551/pexels-photo-3532551.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+                <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""  ></li>
+                
+                <!-- <li><img width="200px" id="owl" src="https://images.pexels.com/photos/3532552/pexels-photo-3532552.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""  onclick="alert('owl')"></li> -->
+                <!-- Note:- Hum onclick=""  ka bhi use kar sakte hai, But ye large scale application ke liye bad approch hai. Html me inject nahi karna chahiye for projection level application.
+                
+                -> But react ke andar onclick element me likhe to chalta hai. -->
+                <li><img width="200px" id="prayer" src="https://images.pexels.com/photos/2522671/pexels-photo-2522671.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load" alt=""></li>
+                <li><a style="color: aliceblue;" href="https://google.com" id="google">Google</a></li>
+                
+            </ul>
+       </div>
+    </body>
+
+
+    <script>
+    /*
+        // Note:- Ye method bhi best apporch nahi hai kiuki "onclick" hame jayada functionality nahi dete hai. Hame "eventListner" use karna chahiye.
+        
+        document.getElementById('photoshop').onclick = function(){
+            alert("photoshop clicked")
+        }
+
+    */
+
+    // Best Approch - addEventListener
+
+    /*
+        addEventListener('click', function(){}, false)
+
+        -> first parameter - click is mouse-keyboard event;
+        -> second parameter - is callback function;
+        -> third parameter - is false (Note:- By default false hi hota hai, Isliye likhne ki jarurat bhi nahi hoti hai.);
+
+
+        document.getElementById('photoshop').addEventListener('click', function(){
+            alert("photoshop clicked again.")
+        });
+    
+    */
+
+    
+
+    // attachEvent() - ye approch pehale use hoti thi, jab application ko internet explorer par chalana hota tha.
+
+    // jQuery naam ke framwork  " .on " se event ka use kiya jat hai.
+
+
+    document.getElementById('photoshop').addEventListener('click', function(e){
+        // console.log(e)
+    }, false);
+
+    // e -> ko hum "Event Object" kahege. Yaha par "e" ki jagah kuch or bhi le sakte hai.
+
+
+/*
+    +++++ Ye sab study karna hai. ++++++++
+
+    type -> keyboard, mouse etc event types.
+
+    timestamp -> date activity
+
+    defaultPrevented:-
+
+    The defaultPrevented read-only property of the Event interface returns a boolean value indicating whether or not the call to Event. preventDefault() canceled the event.
+    
+    Clicking on a "Submit" button, prevent it from submitting a form
+    Clicking on a link, prevent the link from following the URL
+
+    "सबमिट" बटन पर क्लिक करके, इसे फ़ॉर्म सबमिट करने से रोकें
+    किसी लिंक पर क्लिक करके, लिंक को यूआरएल का अनुसरण करने से रोकें
+
+    // target, toElement, srcElement, currentTarget,
+    // clientX, clientY, screenX, screenY
+    // altkey, ctrlkey, shiftkey, keyCode
+ 
+*/
+
+/*
+    Example:- Hamne  two id's ko select kiya hai, first "ul" ki id = "image" ko, And second ul ke andar "image" ki id = "owl" ko.
+
+Case:1    +++++ Bubbling event +++++
+    -> Jab ham "false" karte hai tab, browser par koi bhi image click karne par console mai "clicked inside the ul" print hoga. And Jab ham owl wali image par click karege tab console par first - "owl clicked" print hoga then, second - "clicked inside the ul" print hoga.
+    -> Isi ko Event Bubbling kahate hai.
+    -> Jis tarah bubble chote se bad ahota hai usi tarah se, pahle andar wala element(child element) print hoga and then bahar wala (parent element) element console par print hoga.
+    -> By default "false" hi hota hai.
+
+Case:2    +++++ capturing event +++++
+    -> Jab ham "true"  karte hai tab, browser par koi bhi image click karne par console mai "clicked inside the ul" print hoga. And Jab ham owl wali image par click karege tab console par first - "clicked inside the ul" print hoga then, second - "owl" print hoga.
+    -> Ise event "capturing" kahte hai.
+    -> "capturing" jata hai "top to buttom".
+    
+Case:3  +++++ stopPropagation() ++++
+
+    -> Jab "false" likha ho or ham "bubbling event" ko rokhna chahte hai, tab "stopPropagation()" method ka use karna chahiye.
+    -> stopPropagation() se, jese hi hum "owl" par click karege jab event bubble hokar upar ke event par nahi jayega. Or console par sirf "owl clicked" hi print hoga.
+    -> Ise use karne ke liye hame "owl" wale code me. "event objetc" ko select karke stopPropagation() method ka use karna hoga.
+
+    -> Ex. e.stopPropagation() 
+
+    ->document.getElementById('owl').addEventListener('click', function(e){
+        console.log("owl clicked");
+        e.stopPropagation()
+    }, false)
+*/
+
+/*
+    document.getElementById('images').addEventListener('click', function(e){
+        console.log("clicked inside the ul");
+    }, false)
+
+    document.getElementById('owl').addEventListener('click', function(e){
+        console.log("owl clicked");
+        e.stopPropagation()
+    }, false)
+*/
+
+
+/*
+    +++++ preventDefault() - prevent karna hai default behavior se. ++++++
+    
+    -> For example , Ham chahte hai ki, Jab google par click kar rahe hai tab vo direct google site par ja raha he, Use hame stop karna hai.
+    -> To is case me ham preventDefault() method ka use karega. dhyan rahe hame defaultPrevented() ka use nahi X karna hai.
+    ->Use - "preventDefault()"
+
+
+    -> ------ In following example, -------
+    -> e.preventDefault() - ka use prevet karna default event ko, jese ki google par click karne se google ki site ko open hone se rokana.
+    
+    -> e.stopPropagation() - ka use babaling ko stop karna jisse "clicked inside the ul" ye print na ho.
+
+*/
+
+/*
+    document.querySelector('#google').addEventListener('click', function(e){
+        console.log("google clicked");
+        e.preventDefault();
+        e.stopPropagation();
+    },true)
+
+*/
+
+// ++++++++ Example:- Remove Images ++++++++++
+/* Note:-
+
+    -> e.target - Sirf ye likhne se only images hi remove hoge, bullet points remove nahi hoge but hame to pura <li> tag remove karna hai to ham "e.target.parentNode" likhna hoga jisse pura <li> select hoga.
+
+    -> method:1
+        - removeIt.remove()
+        - method one is easy to use and understable.
+        - syntex means, Jo removeIt variable me jo parentNode "<li>" hai usko ko target kiya, and remove() method ka use karke "<li>" ko remove kar diya.  
+
+    -> method:2
+        - removeIt.parentNode.removeChild(removeIt)
+        - method two is some hard than method one.
+        - sytex means, Jo removeIt variable hai useka parentNode yani ki "<li>" ka parent "<ul>" , uske child ko yani ki "<li>" ko remove karna, removeChild() method ka use karke konsa child remove karo jo removeIt ke andar aaya hai.
+
+*/
+  
+/* 
+// Note:- Issme ek problem hai, Hame to sirf Image hi remove karni thi , ham image ke upar click karte hai tab image to remove ho rahi hai ,But yadi ham image ke ke side me ya fir bullet point par click karte hai tab pura ka pura <ul> hi remove ho raha hai to hame "tagName" se if condition check karna hoga.
+ 
+    Code:- 
+
+    document.getElementById('images').addEventListener('click', function(e){
+        console.log(e.target.parentNode)
+        let removeIt = e.target.parentNode
+
+        // method:1
+        removeIt.remove();
+
+        // method:2
+        // removeIt.parentNode.removeChild(removeIt);
+
+    },false)
+
+*/
+
+
+    document.getElementById('images').addEventListener('click', function(e){
+        console.log(e.target.tagName)
+
+        if(e.target.tagName === 'IMG'){
+            let removeIt = e.target.parentNode
+            console.log(e.target.id)
+            removeIt.remove()
+        }
+
+
+
+        // method:1
+        // removeIt.remove();
+
+        // method:2
+        // removeIt.parentNode.removeChild(removeIt);
+
+    },false)
+
+
+
+ </script>
+</html>
