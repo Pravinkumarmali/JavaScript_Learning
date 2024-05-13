@@ -1,0 +1,74 @@
+<!-- API ke liye abhi "fatch" use hota hai, fatch abhi 4-5 pahle hi introduce huaa hai , issepahle ham "xml http request" send bhejte the.
+
+// XMLHttpRequest //
+-> XMLHttpRequest (XHR) objects are used to interact with servers. You can retrieve data from a URL without having to do a full page refresh. This enables a Web page to update just part of a page without disrupting what the user is doing.
+-> It is used heavily AJAX programming.
+-> For more read this:
+-> https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+
+-> AJAX : https://developer.mozilla.org/en-US/docs/Glossary/AJAX
+
+-> XMLHttpRequest: readyState property (Must read)
+-> https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/readyState
+
+// ===== The XMLHttpRequest.readyState property returns the state an XMLHttpRequest client is in. An XHR client exists in one of the following states: ===== //
+
+Value	State	Description
+0	UNSENT	Client has been created. open() not called yet.
+1	OPENED	open() has been called.
+2	HEADERS_RECEIVED	send() has been called, and headers and status are available.
+3	LOADING	Downloading; responseText holds partial data.
+4	DONE	The operation is complete.
+
+--> 
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ApiRequest</title>
+</head>
+<body style="background-color: #212121;">
+    <script>
+        const requestUrl = "https://api.github.com/users/pravinkumarmali";
+
+        const xhr = new XMLHttpRequest();
+
+        // open() mai two parameter hote hai first - method (GET, POST) ; second - string ;
+        // ope() ye apne aap me call nahi hota hai , call karne ke liye hame "send()" ka use karna padata hai. tab ye call hota hai.
+            console.log("HERE");
+            xhr.open('GET', requestUrl);
+        
+        // ++ readyState change hote rahte, use check karne ke liye console kiya hai., readyState() ka use karke.
+    
+            // console.log(xhr.readyState);
+
+        // ++ continue state check karne ke liye. onreadystatechange() ka use karege, Jo ki apne aap me ek function leta hai.
+        // output mai jese bhi state change hota hai, vese ye function execute hota hai. Tabhi to isko Asynchronous programming bolte hai.
+            xhr.onreadystatechange = function(){
+                console.log(xhr.readyState);
+                if(xhr.readyState === 4){               
+                    // console.log(this.responseText)
+                    
+                    // const data = this.responseText
+
+                    // console.log(data)
+                    // console.log(typeof data) // data type:- string
+                   
+                    const data = JSON.parse(this.responseText)
+                    console.log(typeof data) // data type:- object
+                    console.log(data.followers) 
+                    // Note:- Ye "console.log(data.followers)" se console mai "undefined" likha huaa aayega. Kiuki jab bhi response aata hai url se to vo "string" mai aata hai. Most of time sting me data aata hai, kuch case me object mai aat hai.
+
+                    // string ko hame object mai convert karna hoga. ye dikta hai object but ye JSON data hai. To jis karike se ham number me convet ke liye "Number()" likhte hai, string me convert ke liye "String()" ; Usi tarah se JSON mai convert ke liye "JSON.parse" parse method ka use karna hoga jo string ko JSON mai convert kar deta hai, data type hi hai.
+                    // JSON.parse ke use karne ke baad data type :- object ho gaya.
+
+
+                }
+            }
+
+        xhr.send();
+    </script>
+</body>
+</html>
