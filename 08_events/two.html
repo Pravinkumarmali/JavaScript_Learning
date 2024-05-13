@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Chai aur code</h1>
+    <button id="stop">Stop</button>
+
+
+    <script>
+
+/*
+    ----- JavaScript setTimeout() & setInterval() Method -----
+
+    -> JavaScript SetTimeout and SetInterval are the only native function in JavaScript that is used to run code asynchronously, it means allowing the function to be executed immediately, there is no need to wait for the current execution completion, it will be for further execution.
+
+    1) --- JavaScript setTimeout() Method ---
+    -> This method executes a function, after waiting a specified number of milliseconds. 
+
+    Syntax:  window.setTimeout(function, milliseconds);
+    
+    Parameter:
+    -> function: the first parameter is a function to be executed
+    -> milliseconds: which indicates the number of milliseconds before the execution takes place.
+
+    2) --- JavaScript setInterval() Method ---
+    -> The setInterval() method repeats a given function at every given time interval. 
+
+    Syntex: window.setInterval(function, milliseconds);
+
+    Parameter:
+    -> function: the first parameter is the function to be executed
+    -> milliseconds: indicates the length of the time interval between each execution.
+
+
+    3) ---- clearTimeout() ----
+    -> We can even stop the execution of the setTimeout() function by using a method called as clearTimeout().
+
+    Syntex: window.clearTimeout(value);
+
+    Parameter:
+    value: The function whose execution is to be stopped.
+
+
+    4) ---- clearInterval() ----
+    -> Since the setInterval() method executes the function infinitely hence there is a method called as clearInterval() to stop the execution of the setInterval().
+
+    Syntex: window.clearInterval(value);
+
+    Parameter: 
+    value: The function whose execution is to be stopped.
+
+
+    // For More click this side:- //
+    :- https://www.geeksforgeeks.org/java-script-settimeout-setinterval-method/
+
+
+    Ex.
+         setTimeout(function(){
+            console.log("Pravin");
+            },2000)
+
+
+    Note:- Hame ek function banaya or use ek variable me store kiya hai.
+            1) sayPravin - ise function reference dena bolte hai.
+            2) sayPravin() - ise function execution bolte hai.
+
+
+*/
+// <---- setTimeout() method --->
+// Ex.1
+        const sayPravin = function(){
+            console.log("Pravin");
+        }
+
+        setTimeout(sayPravin, 2000)
+
+// Ex.2
+        const changeText = function(){
+            document.querySelector('h1').innerHTML = "Best Js series"
+        }
+
+        const changeMe = setTimeout(changeText, 3000)
+
+// <--- clearTimeout() --->
+// setTimeout() ko hatane ke liye ya vo execute na ho ya fir timeout se pahle hi rokne ke liye clearTimeout() method ka use hota hai. Iske reference mai vo function dena hai jis event ko hame stop karna hai.
+
+        // use:1
+            // clearTimeout(changeMe)
+
+        // Ase bhi use kar sakte hai but, ye sahi nahi hai kiuki pahle setTimeout() kiya fir clearTimeout() use kiya to ase me ye text kabhi change hi nhai hoga.
+        // ClearTimeout() ko use karne ki best approch hai ki ise kisi button ya click event ya koi or event ke sath use kare.
+
+        // use:2 - this is best way to use clearTimeout() method.
+            document.querySelector("#stop").addEventListener('click', function(){
+                clearTimeout(changeMe);
+                console.log("STOPPED TEXT CHANGE")
+            });
+
+    </script>
+</body>
+</html>
