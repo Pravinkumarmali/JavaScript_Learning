@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Chai aur Javascript</h1>
+    <button id="start">Start</button>
+    <button id="stop">Stop</button>
+</body>
+<script>
+   
+// <---- setInterval() method --->
+
+   const sayDate = function(str){
+    // console.log("Pravin", Date.now());
+    console.log(str, Date.now())
+   }
+
+//    setInterval(sayDate, 1500, "hello ji")
+   const intervalId = setInterval(sayDate, 1500, "hello ji")
+
+    // 3rd parameter "string" hota hai use bhi ham le sakte hai.
+
+// <--- clearInterval() --->
+
+// use:1 - isse ek bar bhi run nahi karega.
+//    clearInterval(intervalId)
+
+// use:2
+
+   
+// --------- error code ----------
+   // for stop interval
+   const toStart = function(){
+    intervalId = setInterval(sayDate, 1500);
+   }
+
+   // for start interval
+   const toStop = function(){
+    clearInterval(intervalId);
+   }
+
+   document.querySelector('#start').addEventListener('click', toStart);
+   document.querySelector('#stop').addEventListener('click', toStop);
+</script>
+</html>
